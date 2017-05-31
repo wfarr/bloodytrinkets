@@ -42,4 +42,9 @@ simc_settings["c_profile"]      = False
 simc_settings["c_profile_path"] = "example_dir/"
 simc_settings["c_profile_name"] = "example_name.simc"
 
+# Want to customize the secondary trinket paired with others in the sims?
+simc_settings["use_second_trinket"] = False
+simc_settings["trinket1_id"] = "141482" # Arcanocrystal
+simc_settings["trinket1_ilevel"] = "860"
+
 simc_settings["ptr"] = True

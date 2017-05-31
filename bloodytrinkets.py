@@ -41,7 +41,10 @@ def get_dps(trinket_id, item_level, fight_style):
     argument += settings.simc_settings["c_profile_path"] + settings.simc_settings["c_profile_name"] + " "
   else:
     argument += settings.simc_settings["class"] + "_" + settings.simc_settings["spec"] + "_" + settings.simc_settings["tier"] + ".simc "
-  argument += "trinket1= "
+  if settings.simc_settings["use_second_trinket"]:
+    argument += "trinket1=,id=" + settings.simc_settings["trinket1_id"] + ",ilevel=" + settings.simc_settings["trinket1_ilevel"] + " "
+  else:
+    argument += "trinket1= "
   argument += "trinket2=,id=" + trinket_id + ",ilevel=" + item_level + " "
   # call simulationcraft in the background. grab output for processing and getting dps value
   simulation_output = subprocess.run(argument, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
@@ -78,6 +81,9 @@ def sim_all( trinkets, ilevels, fight_style ):
   all_simmed = {}
   for source in trinkets:
     for trinket in trinkets[source]:
+      if settings.simc_settings["use_second_trinket"] and trinket[1] == settings.simc_settings["trinket1_id"]:
+        # don't try and simulate the same trinket equipped twice
+        continue
       all_simmed[trinket[0]] = {}
       for ilevel in ilevels:
         dps = "0"
